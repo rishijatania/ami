@@ -11,13 +11,13 @@ commands:
     steps:
       - run:
           name: Build Packer
-          command: packer build -var 'aws_access_key'=$aws_access_key -var 'aws_secret_key'=$aws_secret_key -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
+          command: packer build -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
 
   validate_packer:
     steps:
       - run: #Validate packer
           name: Validate base
-          command: packer validate -var 'aws_access_key'=$aws_access_key -var 'aws_secret_key'=$aws_secret_key -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
+          command: packer validate -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
 
 jobs:
   build:
