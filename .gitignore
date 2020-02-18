@@ -6,3 +6,6 @@ crash.log
 
 # For built boxes
 *.box
+
+# AWS Credentails
+vars.json
