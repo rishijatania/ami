@@ -1,0 +1,38 @@
+version: 2.1
+
+executors:
+  packer-image: # declares a reusable executor
+    working_directory: ~/ami # directory where steps will run
+    docker: 
+      - image: hashicorp/packer:1.1.1 # the primary container, where your job's commands are run
+
+commands:
+  build-packer:
+    steps:
+      - run:
+          name: Build Packer
+          command: packer build -var 'aws_access_key'=$aws_access_key -var 'aws_secret_key'=$aws_secret_key -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
+
+  validate_packer:
+    steps:
+      - run: #Validate packer
+          name: Validate base
+          command: packer validate -var 'aws_access_key'=$aws_access_key -var 'aws_secret_key'=$aws_secret_key -var 'aws_region'=$aws_region -var 'source_ami'=$source_ami -var 'ssh_username'=$ssh_username -var 'ami_users'=$ami_users ./ami.json
+
+jobs:
+  build:
+    executor: packer-image
+    steps:
+      - checkout: # check out the code in the project directory
+          path: ~/ami
+      - validate_packer
+      - build-packer
+
+workflows:
+  build_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
