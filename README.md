@@ -22,3 +22,5 @@ s
 ```
 packer build -var-file=./vars.json ami.json
 ```
+
+Testing Packer
