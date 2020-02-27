@@ -5,13 +5,13 @@
         "aws_region": "{{env `AWS_REGION`}}",
         "subnet_id": "",
         "source_ami": "{{env `AWS_SOURCE_AMI`}}",
-		"ssh_username": "{{env `AWS_SSH_USERNAME`}}",
-		"ami_users": "{{env `AWS_AMI_USERS`}}"
+        "ssh_username": "{{env `AWS_SSH_USERNAME`}}",
+        "ami_users": "{{env `AWS_AMI_USERS`}}"
     },
     "builders": [
         {
-			"type": "amazon-ebs",
-			"ami_users": "{{user `ami_users`}}",
+            "type": "amazon-ebs",
+            "ami_users": "{{user `ami_users`}}",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "{{user `aws_region`}}",
@@ -34,13 +34,12 @@
     "provisioners": [
         {
             "type": "shell",
-            "environment_vars": [
-            ],
+            "environment_vars": [],
             "inline": [
                 "sudo apt-get update",
                 "sudo apt-get install curl",
-				"curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -",
-				"sudo apt-get install nodejs -y"
+                "curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -",
+                "sudo apt-get install nodejs -y"
             ]
         }
     ]
