@@ -6,7 +6,8 @@
         "subnet_id": "",
         "source_ami": "{{env `AWS_SOURCE_AMI`}}",
         "ssh_username": "{{env `AWS_SSH_USERNAME`}}",
-        "ami_users": "{{env `AWS_AMI_USERS`}}"
+        "ami_users": "{{env `AWS_AMI_USERS`}}",
+		"bucket_name": "{{env `BUCKET_NAME`}}"
     },
     "builders": [
         {
@@ -34,7 +35,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "environment_vars": [],
+            "environment_vars": ["CODEDEPLOY_AGENT_URL={{user `bucket_name`}}{{user `aws_region`}}.amazonaws.com/latest/install"],
             "execute_command": "sudo -E -S bash '{{.Path}}'",
             "script": "amisetup.sh"
         }

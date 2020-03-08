@@ -5,8 +5,7 @@ sudo apt-get install nodejs -y
 
 sudo apt-get install ruby -y
 sudo apt-get install wget -y
-codedeploy_agent_url=https://aws-codedeploy-$AWS_REGION.s3.$AWS_REGION.amazonaws.com/latest/install
-wget $codedeploy_agent_url
+wget $CODEDEPLOY_AGENT_URL
 chmod +x ./install
 sudo ./install auto
 sudo service codedeploy-agent start
