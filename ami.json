@@ -36,7 +36,7 @@
         {
             "type": "shell",
             "environment_vars": ["BUCKET_NAME={{user `bucket_name`}}", "AWS_REGION={{user `aws_region`}}"],
-            "execute_command": "sudo -E -S bash '{{.Path}}'",
+            "execute_command": "{{.Vars}} sudo -E -S bash '{{.Path}}'",
             "script": "amisetup.sh"
         }
     ]
