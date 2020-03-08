@@ -19,14 +19,14 @@ commands:
           name: Validate base
           command: packer validate ./ami.json
 
-  install_awscli:
-    steps:
-      - run:
-          name: Install awscli
-          command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+  # install_awscli:
+  #   steps:
+  #     - run:
+  #         name: Install awscli
+  #         command: |
+  #           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  #           unzip awscliv2.zip
+  #           sudo ./aws/install
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
     steps:
       - checkout: # check out the code in the project directory
           path: ~/ami
-      - install_awscli
+      # - install_awscli
       - validate_packer
       - build_packer
 
