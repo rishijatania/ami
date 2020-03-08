@@ -22,13 +22,13 @@ commands:
     steps:
       - run:
           name: Build Packer
-          command: packer build ./ami.json
+          command: ./packer build ./ami.json
 
   validate_packer:
     steps:
       - run: #Validate packer
           name: Validate base
-          command: packer validate ./ami.json
+          command: ./packer validate ./ami.json
 
   install_awscli:
     steps:
