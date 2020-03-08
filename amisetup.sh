@@ -5,7 +5,8 @@ sudo apt-get install nodejs -y
 
 sudo apt-get install ruby -y
 sudo apt-get install wget -y
-wget $CODEDEPLOY_AGENT_URL
+echo ${CODEDEPLOY_AGENT_URL}
+wget "${CODEDEPLOY_AGENT_URL}"
 chmod +x ./install
 sudo ./install auto
 sudo service codedeploy-agent start
