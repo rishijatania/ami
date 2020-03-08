@@ -4,38 +4,29 @@ executors:
   packer-image: # declares a reusable executor
     working_directory: ~/ami # directory where steps will run
     docker:
-      - image: circleci/python:2.7-jessie # the primary container, where your job's commands are run
+      - image: hashicorp/packer:1.1.1 # the primary container, where your job's commands are run
 
 commands:
-  install_packages:
-    steps:
-      - run:
-          name: Install packages
-          command: |
-            sudo apt-get update
-            sudo apt install wget unzip -y
-            wget -q https://releases.hashicorp.com/packer/1.3.4/packer_1.3.4_linux_amd64.zip
-            unzip packer*.zip
-            chmod +x packer
-            ls -al
-
   build_packer:
     steps:
       - run:
           name: Build Packer
-          command: ./packer build ami.json
+          command: packer build ./ami.json
 
   validate_packer:
     steps:
       - run: #Validate packer
           name: Validate base
-          command: ./packer validate ami.json
+          command: packer validate ./ami.json
 
   install_awscli:
     steps:
       - run:
           name: Install awscli
-          command: sudo pip install awscli
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
 
 jobs:
   build:
@@ -43,7 +34,6 @@ jobs:
     steps:
       - checkout: # check out the code in the project directory
           path: ~/ami
-      - install_packages
       - install_awscli
       - validate_packer
       - build_packer
