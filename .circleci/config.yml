@@ -2,6 +2,7 @@ version: 2.1
 
 executors:
   packer-image: # declares a reusable executor
+    working_directory: ~/ami # directory where steps will run
     docker:
       - image: circleci/python:2.7-jessie # the primary container, where your job's commands are run
 
@@ -17,7 +18,6 @@ commands:
             unzip packer*.zip
             chmod +x packer
             ls -al
-            pwd
 
   build_packer:
     steps:
@@ -41,6 +41,8 @@ jobs:
   build:
     executor: packer-image
     steps:
+      - checkout: # check out the code in the project directory
+          path: ~/ami
       - install_packages
       - install_awscli
       - validate_packer
