@@ -6,7 +6,8 @@
         "subnet_id": "",
         "source_ami": "{{env `AWS_SOURCE_AMI`}}",
         "ssh_username": "{{env `AWS_SSH_USERNAME`}}",
-        "ami_users": "{{env `AWS_AMI_USERS`}}"
+        "ami_users": "{{env `AWS_AMI_USERS`}}",
+		"bucket_name": "{{env `BUCKET_NAME`}}"
     },
     "builders": [
         {
@@ -34,13 +35,9 @@
     "provisioners": [
         {
             "type": "shell",
-            "environment_vars": [],
-            "inline": [
-                "sudo apt-get update",
-                "sudo apt-get install curl",
-                "curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -",
-                "sudo apt-get install nodejs -y"
-            ]
+            "environment_vars": ["BUCKET_NAME={{user `bucket_name`}}", "AWS_REGION={{user `aws_region`}}"],
+            "execute_command": "{{.Vars}} sudo -E -S bash '{{.Path}}'",
+            "script": "amisetup.sh"
         }
     ]
 }
