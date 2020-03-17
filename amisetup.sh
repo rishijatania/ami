@@ -1,3 +1,4 @@
+sudo apt-get clean
 sudo apt-get update
 sudo apt-get install curl
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
